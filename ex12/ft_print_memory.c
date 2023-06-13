@@ -1,16 +1,19 @@
 #include <unistd.h>
 #include <stdio.h>
 
-void	char_to_hex(char *hex, unsigned char c)
+void	ptr_to_hex(char *hex, void *ptr)
 {
 	int	iter;
 	int	mod;
 
 	iter = 14;
-	while (c > 0)
+	while (ptr > 0)
 	{
-		mod = c % 16;
-		c /= 16;
+		unsigned long ptr_i;
+		ptr_i = (unsigned long)ptr;
+
+		mod = ptr_i % 16;
+		ptr_i /= 16;
 		if (mod < 10)
 			hex[iter] = '0' + mod;
 		else
@@ -35,11 +38,13 @@ void ft_put_pointer(char *ptr){
 void	*ft_print_memory(void *addr, unsigned int size)
 {
 	unsigned int iter;
+	char hex[20];
 
 	iter = 0;
 	while (iter < size)
 	{
-		ft_put_pointer(addr + iter);
+//		ft_put_pointer(addr + iter);
+		ptr_to_hex(hex, addr);
 		iter += 16;
 	}
 	return (addr);
